@@ -91926,9 +91926,9 @@ var require_find_up = __commonJS({
   }
 });
 
-// módulos/jiti-meta.json
+// dist/jiti-meta.json
 var require_jiti_meta = __commonJS({
-  "m\xF3dulos/jiti-meta.json"(exports2, module2) {
+  "dist/jiti-meta.json"(exports2, module2) {
     module2.exports = {
       version: "2.6.1"
     };

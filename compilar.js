@@ -21,16 +21,16 @@ console.log('=== Iniciando Compilación de ESLint Autocontenido ===');
 // ==========================================
 // PASO 1: Preparar Entorno de Salida
 // ==========================================
-// Creamos la estructura de directorios necesaria dentro de "módulos/".
+// Creamos la estructura de directorios necesaria dentro de "dist/".
 // Esto es crucial porque esbuild no crea directorios padre automáticamente.
-// - módulos/lib: Para la API de ESLint
-// - módulos/bin: Para el ejecutable CLI
-// - módulos/cli-engine/formatters: Para los formateadores de salida (json, stylish, etc.)
+// - dist/lib: Para la API de ESLint
+// - dist/bin: Para el ejecutable CLI
+// - dist/cli-engine/formatters: Para los formateadores de salida (json, stylish, etc.)
 console.log('\n--> Paso 1: Creando directorios...');
 const dirs = [
-    'módulos/lib',
-    'módulos/bin',
-    'módulos/cli-engine/formatters'
+    'dist/lib',
+    'dist/bin',
+    'dist/cli-engine/formatters'
 ];
 
 dirs.forEach(dir => {
@@ -55,13 +55,13 @@ console.log('\n--> Paso 2: Compilando Jiti...');
 const jitiVersion = '2.6.1';
 
 // Compilamos jiti.cjs a un archivo autocontenido (sin dependencias externas)
-run(`npx esbuild node_modules/jiti/lib/jiti.cjs --bundle --platform=node --outfile=módulos/jiti.js "--footer:js=module.exports.version = '${jitiVersion}';"`);
+run(`npx esbuild node_modules/jiti/lib/jiti.cjs --bundle --platform=node --outfile=dist/jiti.js "--footer:js=module.exports.version = '${jitiVersion}';"`);
 
 // Creamos un archivo de metadatos falso para jiti.
 // ESLint a veces intenta leer 'jiti/package.json' para verificar versiones.
 // Redirigiremos esas lecturas a este archivo.
-fs.writeFileSync('módulos/jiti-meta.json', JSON.stringify({ version: jitiVersion }, null, 2));
-console.log('    + Creado: módulos/jiti-meta.json (Metadatos simulados)');
+fs.writeFileSync('dist/jiti-meta.json', JSON.stringify({ version: jitiVersion }, null, 2));
+console.log('    + Creado: dist/jiti-meta.json (Metadatos simulados)');
 
 // ==========================================
 // PASO 3: Compilar Formatters Esenciales
@@ -79,13 +79,13 @@ const formatters = [
 
 formatters.forEach(formatter => {
     // Compilamos cada formatter individualmente
-    run(`npx esbuild node_modules/eslint/lib/cli-engine/formatters/${formatter} --bundle --platform=node --outfile=módulos/cli-engine/formatters/${formatter}`);
+    run(`npx esbuild node_modules/eslint/lib/cli-engine/formatters/${formatter} --bundle --platform=node --outfile=dist/cli-engine/formatters/${formatter}`);
 });
 
 // Copiamos los metadatos de los formatters si existen.
 // Esto es necesario para que ESLint sepa qué formatters están disponibles.
 const metaSrc = path.join('node_modules', 'eslint', 'lib', 'cli-engine', 'formatters', 'formatters-meta.json');
-const metaDest = path.join('módulos', 'cli-engine', 'formatters', 'formatters-meta.json');
+const metaDest = path.join('dist', 'cli-engine', 'formatters', 'formatters-meta.json');
 if (fs.existsSync(metaSrc)) {
     fs.copyFileSync(metaSrc, metaDest);
     console.log(`    + Copiado: formatters-meta.json`);
@@ -113,14 +113,14 @@ console.log('\n--> Paso 4: Compilando Core de ESLint...');
 
 // 4.1 CLI (bin/eslint-autocontenido.js)
 // Este es el ejecutable que se corre desde la terminal.
-// Se usa '../jiti.js' porque el output está en 'módulos/bin/', así que subimos un nivel.
+// Se usa '../jiti.js' porque el output está en 'dist/bin/', así que subimos un nivel.
 console.log('    [CLI] Generando binario...');
-run(`npx esbuild node_modules/eslint/bin/eslint.js --bundle --platform=node --format=cjs --outfile=módulos/bin/eslint-autocontenido.js --alias:jiti=../jiti.js --alias:jiti/package.json=./módulos/jiti-meta.json --external:../jiti.js --external:fsevents`);
+run(`npx esbuild node_modules/eslint/bin/eslint.js --bundle --platform=node --format=cjs --outfile=dist/bin/eslint-autocontenido.js --alias:jiti=../jiti.js --alias:jiti/package.json=./dist/jiti-meta.json --external:../jiti.js --external:fsevents`);
 
 // 4.2 API (lib/api.js)
 // Esta es la librería que se usa cuando haces require('eslint') en otro script.
 console.log('    [API] Generando librería...');
-run(`npx esbuild node_modules/eslint/lib/api.js --bundle --platform=node --outfile=módulos/lib/api.js --alias:jiti=../jiti.js --alias:jiti/package.json=./módulos/jiti-meta.json --external:../jiti.js`);
+run(`npx esbuild node_modules/eslint/lib/api.js --bundle --platform=node --outfile=dist/lib/api.js --alias:jiti=../jiti.js --alias:jiti/package.json=./dist/jiti-meta.json --external:../jiti.js`);
 
 console.log('\n=== Compilación Completada Exitosamente ===');
-console.log('Los archivos generados se encuentran en el directorio "módulos/".');
+console.log('Los archivos generados se encuentran en el directorio "dist/".');

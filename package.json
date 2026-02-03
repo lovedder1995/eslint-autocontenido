@@ -1,16 +1,16 @@
 {
   "name": "eslint-autocontenido",
   "version": "9.39.2",
-  "main": "./módulos/lib/api.js",
+  "main": "./dist/lib/api.js",
   "bin": {
-    "eslint-autocontenido": "./módulos/bin/eslint-autocontenido.js"
+    "eslint-autocontenido": "./dist/bin/eslint-autocontenido.js"
   },
   "exports": {
-    ".": "./módulos/lib/api.js",
+    ".": "./dist/lib/api.js",
     "./package.json": "./package.json"
   },
   "files": [
-    "módulos",
+    "dist",
     "README.md",
     "LICENSE"
   ],

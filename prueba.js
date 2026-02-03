@@ -1,8 +1,8 @@
-const { ESLint } = require('./módulos/lib/api.js');
+const { ESLint } = require('./dist/lib/api.js');
 
 (async function main() {
   try {
-    console.log('Cargando ESLint desde ./módulos/lib/api.js ...');
+    console.log('Cargando ESLint desde ./dist/lib/api.js ...');
     
     // Creamos una instancia de ESLint con una configuración básica
     // Usamos overrideConfig para inyectar una configuración plana (Flat Config)
