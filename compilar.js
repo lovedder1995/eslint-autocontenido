@@ -111,11 +111,11 @@ if (fs.existsSync(metaSrc)) {
 
 console.log('\n--> Paso 4: Compilando Core de ESLint...');
 
-// 4.1 CLI (bin/eslint.js)
+// 4.1 CLI (bin/eslint-autocontenido.js)
 // Este es el ejecutable que se corre desde la terminal.
 // Se usa '../jiti.js' porque el output está en 'módulos/bin/', así que subimos un nivel.
 console.log('    [CLI] Generando binario...');
-run(`npx esbuild node_modules/eslint/bin/eslint.js --bundle --platform=node --format=cjs --outfile=módulos/bin/eslint.js --alias:jiti=../jiti.js --alias:jiti/package.json=./módulos/jiti-meta.json --external:../jiti.js --external:fsevents`);
+run(`npx esbuild node_modules/eslint/bin/eslint.js --bundle --platform=node --format=cjs --outfile=módulos/bin/eslint-autocontenido.js --alias:jiti=../jiti.js --alias:jiti/package.json=./módulos/jiti-meta.json --external:../jiti.js --external:fsevents`);
 
 // 4.2 API (lib/api.js)
 // Esta es la librería que se usa cuando haces require('eslint') en otro script.

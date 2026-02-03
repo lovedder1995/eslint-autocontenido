@@ -3,7 +3,7 @@
   "version": "9.39.2",
   "main": "./módulos/lib/api.js",
   "bin": {
-    "eslint": "./módulos/bin/eslint.js"
+    "eslint-autocontenido": "./módulos/bin/eslint-autocontenido.js"
   },
   "exports": {
     ".": "./módulos/lib/api.js",

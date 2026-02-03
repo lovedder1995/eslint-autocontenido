@@ -38,7 +38,7 @@ Para que este paquete funcione como un reemplazo directo, actualiza tu `package.
 {
   "main": "./módulos/lib/api.js",
   "bin": {
-    "eslint": "./módulos/bin/eslint.js"
+    "eslint-autocontenido": "./módulos/bin/eslint-autocontenido.js"
   },
   "exports": {
     ".": "./módulos/lib/api.js",
@@ -56,7 +56,7 @@ Para que este paquete funcione como un reemplazo directo, actualiza tu `package.
 
 1.  **Verificar CLI:**
     ```bash
-    node módulos/bin/eslint.js --version
+    node módulos/bin/eslint-autocontenido.js --version
     # Debería mostrar la versión de ESLint (ej. v9.39.2)
     ```
 
