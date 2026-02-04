@@ -19,6 +19,19 @@ function run(command) {
 console.log('=== Iniciando Compilación de ESLint Autocontenido ===');
 
 // ==========================================
+// PASO 0: Limpiar entorno previo
+// ==========================================
+// Eliminamos la carpeta dist/ completa para asegurar una compilación limpia
+// y evitar archivos basura de ejecuciones anteriores.
+console.log('\n--> Paso 0: Limpiando dist/ ...');
+if (fs.existsSync('dist')) {
+    fs.rmSync('dist', { recursive: true, force: true });
+    console.log('    + Directorio dist/ eliminado.');
+} else {
+    console.log('    . Nada que limpiar.');
+}
+
+// ==========================================
 // PASO 1: Preparar Entorno de Salida
 // ==========================================
 // Creamos la estructura de directorios necesaria dentro de "dist/".
