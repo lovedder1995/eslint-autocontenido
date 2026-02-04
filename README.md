@@ -16,8 +16,6 @@ Este proyecto compila una versión autocontenida de **ESLint** utilizando **excl
 3.  Instalar dependencias (en modo desarrollo):
     ```bash
     npm install
-    # O si estás iniciando:
-    # npm install eslint jiti esbuild --save-dev
     ```
 
 ## Pasos de Compilación
@@ -32,7 +30,7 @@ El script `compilar.js` contiene explicaciones detalladas sobre cada paso del pr
 
 ### 5. Configuración del Paquete (package.json)
 
-Para que este paquete funcione como un reemplazo directo, actualiza tu `package.json` con los siguientes campos:
+Este paquete ya está configurado para funcionar como un reemplazo directo:
 
 ```json
 {
